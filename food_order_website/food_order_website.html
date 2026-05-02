@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FDF6EC;--warm:#F5ECD7;--rust:#C2541A;--rust-light:#E8703A;
+  --dark:#1A1208;--mid:#5C3D1E;--gold:#D4A843;--card:#FFFAF3;
+  --border:#E8D9B8;--muted:#8B6B47;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* HEADER */
+header{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.logo{font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;color:var(--gold);letter-spacing:-0.5px}
+.logo span{color:var(--rust-light)}
+.header-right{display:flex;align-items:center;gap:1rem}
+.cart-btn{background:var(--rust);border:none;color:#fff;padding:0.5rem 1.25rem;border-radius:2rem;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:0.5rem;transition:background 0.2s}
+.cart-btn:hover{background:var(--rust-light)}
+.cart-count{background:#fff;color:var(--rust);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700}
+
+/* HERO */
+.hero{background:var(--dark);padding:2.5rem 2rem 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;bottom:0;left:0;right:0;height:40px;background:var(--cream);border-radius:40px 40px 0 0}
+.hero-tag{display:inline-block;background:rgba(212,168,67,0.2);color:var(--gold);border:1px solid rgba(212,168,67,0.4);border-radius:2rem;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 1rem;margin-bottom:1rem}
+.hero h1{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;color:#fff;line-height:1;margin-bottom:0.5rem}
+.hero h1 em{color:var(--gold);font-style:italic;font-weight:300}
+.hero p{color:rgba(255,255,255,0.6);font-size:0.95rem;margin-bottom:1.5rem}
+.search-wrap{max-width:440px;margin:0 auto;position:relative}
+.search-wrap input{width:100%;padding:0.875rem 3rem 0.875rem 1.25rem;border-radius:2rem;border:none;font-family:'DM Sans',sans-serif;font-size:0.95rem;background:#fff;color:var(--dark);outline:none}
+.search-wrap button{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--rust);border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;color:#fff;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+
+/* LAYOUT */
+.main{display:flex;gap:0;max-width:100%;min-height:calc(100vh - 200px)}
+.content{flex:1;padding:1.5rem 1.5rem 3rem;min-width:0}
+.sidebar{width:340px;flex-shrink:0;padding:1.5rem 1.5rem 3rem;border-left:1px solid var(--border);background:var(--card)}
+
+/* CATEGORIES */
+.cat-label{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:0.75rem}
+.cats{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.75rem}
+.cat{background:var(--card);border:1px solid var(--border);border-radius:2rem;padding:0.45rem 1rem;font-size:0.85rem;cursor:pointer;color:var(--mid);transition:all 0.15s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.cat:hover{border-color:var(--rust);color:var(--rust)}
+.cat.active{background:var(--rust);border-color:var(--rust);color:#fff}
+
+/* MENU SECTION */
+.section-title{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:var(--dark);margin-bottom:1rem;display:flex;align-items:baseline;gap:0.75rem}
+.section-title span{font-family:'DM Sans',sans-serif;font-size:0.8rem;color:var(--muted);font-weight:400}
+
+/* FOOD GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+.food-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s}
+.food-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(90,45,12,0.12)}
+.food-img{height:130px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;background:linear-gradient(135deg,var(--warm),var(--cream))}
+.food-info{padding:0.875rem}
+.food-name{font-family:'Fraunces',serif;font-weight:700;font-size:1rem;color:var(--dark);margin-bottom:0.25rem;line-height:1.2}
+.food-desc{font-size:0.78rem;color:var(--muted);margin-bottom:0.75rem;line-height:1.4}
+.food-bottom{display:flex;align-items:center;justify-content:space-between}
+.food-price{font-weight:700;font-size:1rem;color:var(--rust)}
+.add-btn{background:var(--dark);color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;flex-shrink:0}
+.add-btn:hover{background:var(--rust)}
+.badge{display:inline-block;font-size:0.65rem;padding:0.15rem 0.5rem;border-radius:2rem;font-weight:500;margin-bottom:0.35rem}
+.badge.spicy{background:#FEE2D5;color:#C2541A}
+.badge.popular{background:#FEF3C7;color:#92400E}
+.badge.veg{background:#D1FAE5;color:#065F46}
+
+/* CART SIDEBAR */
+.cart-title{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--dark);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
+.cart-empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.cart-empty-icon{font-size:3rem;margin-bottom:0.75rem}
+.cart-empty p{font-size:0.9rem}
+.cart-items{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.25rem}
+.cart-item{display:flex;gap:0.75rem;align-items:center;background:var(--warm);border-radius:12px;padding:0.65rem 0.75rem}
+.ci-emoji{font-size:1.75rem;flex-shrink:0}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-size:0.85rem;font-weight:500;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-price{font-size:0.8rem;color:var(--rust);font-weight:700}
+.qty-ctrl{display:flex;align-items:center;gap:0.35rem;flex-shrink:0}
+.qty-ctrl button{background:var(--card);border:1px solid var(--border);border-radius:50%;width:22px;height:22px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--dark);line-height:1}
+.qty-ctrl button:hover{background:var(--rust);color:#fff;border-color:var(--rust)}
+.qty-ctrl span{font-size:0.85rem;font-weight:600;min-width:16px;text-align:center}
+.cart-divider{border:none;border-top:1px dashed var(--border);margin:1rem 0}
+.cart-row{display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:0.5rem;color:var(--mid)}
+.cart-row.total{font-weight:700;font-size:1rem;color:var(--dark);margin-top:0.5rem}
+.checkout-btn{width:100%;background:var(--rust);color:#fff;border:none;padding:0.875rem;border-radius:2rem;font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:background 0.2s;margin-top:1rem;letter-spacing:0.01em}
+.checkout-btn:hover{background:var(--rust-light)}
+.promo{display:flex;gap:0.5rem;margin-top:0.875rem}
+.promo input{flex:1;padding:0.6rem 0.875rem;border:1px solid var(--border);border-radius:2rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;background:#fff;color:var(--dark);outline:none}
+.promo button{background:var(--dark);color:#fff;border:none;border-radius:2rem;padding:0.6rem 1rem;font-size:0.8rem;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.promo button:hover{background:var(--rust)}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:#fff;padding:0.65rem 1.25rem;border-radius:2rem;font-size:0.875rem;transition:transform 0.3s;z-index:999;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<h2 class="sr-only">Feast — online food ordering. Browse menu categories, add items to your cart, and checkout.</h2>
+
+<header>
+  <div class="logo">Feast<span>.</span></div>
+  <div class="header-right">
+    <span style="color:rgba(255,255,255,0.5);font-size:0.85rem">Free delivery · 30 min</span>
+    <button class="cart-btn" onclick="scrollToCart()">
+      <span>🛒</span>
+      <span id="h-count" class="cart-count">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">✦ Fresh · Fast · Delicious</div>
+  <h1>Order <em>great</em><br>food today</h1>
+  <p>From local kitchens to your door in under 30 minutes</p>
+  <div class="search-wrap">
+    <input type="text" placeholder="Search for dishes, cuisines..." id="searchInput" oninput="filterMenu()">
+    <button>→</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="content">
+    <div class="cat-label">Browse by category</div>
+    <div class="cats" id="cats"></div>
+    <div id="menu-sections"></div>
+  </div>
+  <div class="sidebar" id="sidebar">
+    <div class="cart-title">
+      Your Order
+      <span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:400;color:var(--muted)" id="item-count-label"></span>
+    </div>
+    <div id="cart-body"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const MENU = {
+  "Burgers": [
+    {id:1,name:"Smash Burger",desc:"Double patty, American cheese, pickles, special sauce",price:12.99,emoji:"🍔",badges:["popular"]},
+    {id:2,name:"BBQ Bacon Stack",desc:"Smoked bacon, cheddar, BBQ glaze, crispy onions",price:14.49,emoji:"🥩",badges:["popular","spicy"]},
+    {id:3,name:"Mushroom Swiss",desc:"Sautéed mushrooms, Swiss cheese, garlic mayo",price:11.99,emoji:"🍔",badges:["veg"]},
+    {id:4,name:"Crispy Chicken",desc:"Fried chicken, coleslaw, hot honey, brioche bun",price:13.49,emoji:"🐔",badges:[]},
+  ],
+  "Pizza": [
+    {id:5,name:"Margherita",desc:"San Marzano tomato, fresh mozzarella, basil, EVOO",price:14.99,emoji:"🍕",badges:["veg","popular"]},
+    {id:6,name:"Pepperoni Feast",desc:"Loaded pepperoni, mozzarella, tomato sauce",price:16.99,emoji:"🍕",badges:["popular"]},
+    {id:7,name:"Truffle Shroom",desc:"Wild mushrooms, truffle oil, parmesan, arugula",price:18.49,emoji:"🍄",badges:["veg"]},
+    {id:8,name:"Diavola",desc:"Spicy salami, jalapeños, nduja, fiery tomato base",price:17.99,emoji:"🌶️",badges:["spicy"]},
+  ],
+  "Sushi": [
+    {id:9,name:"Salmon Nigiri",desc:"Premium Atlantic salmon, hand-pressed sushi rice",price:13.99,emoji:"🐟",badges:["popular"]},
+    {id:10,name:"Spicy Tuna Roll",desc:"Spicy tuna, cucumber, sriracha mayo, sesame",price:15.49,emoji:"🍣",badges:["spicy"]},
+    {id:11,name:"Dragon Roll",desc:"Prawn tempura, avocado, eel sauce, tobiko",price:17.99,emoji:"🍱",badges:["popular"]},
+    {id:12,name:"Veggie Maki",desc:"Avocado, cucumber, pickled daikon, carrot",price:11.49,emoji:"🥑",badges:["veg"]},
+  ],
+  "Pasta": [
+    {id:13,name:"Cacio e Pepe",desc:"Tonnarelli, pecorino romano, black pepper",price:13.99,emoji:"🍝",badges:["veg","popular"]},
+    {id:14,name:"Seafood Linguine",desc:"Clams, mussels, prawns, white wine, chilli",price:18.99,emoji:"🦞",badges:[]},
+    {id:15,name:"Nduja Rigatoni",desc:"Spicy nduja, cherry tomato, 'nduja butter, basil",price:15.49,emoji:"🍅",badges:["spicy"]},
+  ],
+  "Desserts": [
+    {id:16,name:"Crème Brûlée",desc:"Classic vanilla custard with caramelised sugar crust",price:7.99,emoji:"🍮",badges:["popular"]},
+    {id:17,name:"Chocolate Lava",desc:"Warm dark chocolate fondant, vanilla ice cream",price:8.49,emoji:"🍫",badges:[]},
+    {id:18,name:"Tiramisu",desc:"House-made, espresso-soaked, mascarpone cream",price:7.99,emoji:"☕",badges:["popular"]},
+  ],
+  "Drinks": [
+    {id:19,name:"Mango Lassi",desc:"Fresh mango, yogurt, cardamom, rose water",price:4.99,emoji:"🥭",badges:["veg"]},
+    {id:20,name:"Hibiscus Lemonade",desc:"Hibiscus, fresh lemon, honey, sparkling water",price:4.49,emoji:"🌺",badges:["veg","popular"]},
+    {id:21,name:"Matcha Iced Latte",desc:"Ceremonial matcha, oat milk, vanilla, ice",price:5.49,emoji:"🍵",badges:["veg"]},
+  ]
+};
+
+let cart={};
+let activecat="All";
+
+function init(){
+  const cats=["All",...Object.keys(MENU)];
+  const catsEl=document.getElementById("cats");
+  cats.forEach(c=>{
+    const btn=document.createElement("button");
+    btn.className="cat"+(c==="All"?" active":"");
+    btn.textContent=c;
+    btn.onclick=()=>{activecat=c;document.querySelectorAll(".cat").forEach(b=>b.classList.remove("active"));btn.classList.add("active");renderMenu()};
+    catsEl.appendChild(btn);
+  });
+  renderMenu();
+  renderCart();
+}
+
+function filterMenu(){renderMenu()}
+
+function renderMenu(){
+  const q=document.getElementById("searchInput").value.toLowerCase();
+  const sec=document.getElementById("menu-sections");
+  sec.innerHTML="";
+  const cats=activecat==="All"?Object.keys(MENU):[activecat];
+  cats.forEach(cat=>{
+    const items=MENU[cat].filter(i=>!q||i.name.toLowerCase().includes(q)||i.desc.toLowerCase().includes(q));
+    if(!items.length)return;
+    const wrap=document.createElement("div");
+    wrap.innerHTML=`<div class="section-title">${cat} <span>${items.length} items</span></div><div class="grid" id="g-${cat}"></div>`;
+    sec.appendChild(wrap);
+    const grid=wrap.querySelector(`#g-${cat}`);
+    items.forEach(item=>{
+      const card=document.createElement("div");
+      card.className="food-card";
+      const badgeHTML=item.badges.map(b=>`<span class="badge ${b}">${b==="spicy"?"🌶 Spicy":b==="popular"?"★ Popular":"🌿 Veg"}</span>`).join(" ");
+      card.innerHTML=`<div class="food-img">${item.emoji}</div><div class="food-info">${badgeHTML?`<div style="margin-bottom:0.35rem">${badgeHTML}</div>`:""}<div class="food-name">${item.name}</div><div class="food-desc">${item.desc}</div><div class="food-bottom"><div class="food-price">$${item.price.toFixed(2)}</div><button class="add-btn" onclick="addItem(${item.id},'${item.name.replace(/'/g,"\\'")}',${item.price},'${item.emoji}')" title="Add to cart">+</button></div></div>`;
+      grid.appendChild(card);
+    });
+  });
+}
+
+function addItem(id,name,price,emoji){
+  if(cart[id])cart[id].qty++;
+  else cart[id]={name,price,emoji,qty:1};
+  renderCart();
+  showToast(`${emoji} Added to order!`);
+}
+
+function changeQty(id,d){
+  if(!cart[id])return;
+  cart[id].qty+=d;
+  if(cart[id].qty<=0)delete cart[id];
+  renderCart();
+}
+
+function renderCart(){
+  const body=document.getElementById("cart-body");
+  const keys=Object.keys(cart);
+  const total=keys.reduce((s,k)=>s+cart[k].price*cart[k].qty,0);
+  const count=keys.reduce((s,k)=>s+cart[k].qty,0);
+  document.getElementById("h-count").textContent=count;
+  document.getElementById("item-count-label").textContent=count?`${count} item${count>1?"s":""}` :"";
+  if(!keys.length){
+    body.innerHTML=`<div class="cart-empty"><div class="cart-empty-icon">🍽️</div><p>Your order is empty.<br>Add something delicious!</p></div>`;
+    return;
+  }
+  const delivery=2.99,tax=+(total*0.08).toFixed(2);
+  body.innerHTML=`<div class="cart-items">${keys.map(k=>`<div class="cart-item"><div class="ci-emoji">${cart[k].emoji}</div><div class="ci-info"><div class="ci-name">${cart[k].name}</div><div class="ci-price">$${(cart[k].price*cart[k].qty).toFixed(2)}</div></div><div class="qty-ctrl"><button onclick="changeQty('${k}',-1)">−</button><span>${cart[k].qty}</span><button onclick="changeQty('${k}',1)">+</button></div></div>`).join("")}</div>
+  <div class="promo"><input type="text" placeholder="Promo code..."><button>Apply</button></div>
+  <hr class="cart-divider">
+  <div class="cart-row"><span>Subtotal</span><span>$${total.toFixed(2)}</span></div>
+  <div class="cart-row"><span>Delivery</span><span>$${delivery.toFixed(2)}</span></div>
+  <div class="cart-row"><span>Tax (8%)</span><span>$${tax.toFixed(2)}</span></div>
+  <div class="cart-row total"><span>Total</span><span>$${(total+delivery+tax).toFixed(2)}</span></div>
+  <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>`;
+}
+
+function checkout(){
+  const keys=Object.keys(cart);
+  if(!keys.length)return;
+  showToast("🎉 Order placed! Estimated arrival: 28 min");
+  setTimeout(()=>{cart={};renderCart();},800);
+}
+
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2400);
+}
+
+function scrollToCart(){document.getElementById("sidebar").scrollIntoView({behavior:"smooth"})}
+
+init();
+</script>
+</body>
+</html>
